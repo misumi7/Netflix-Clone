@@ -1,16 +1,8 @@
-# netflix_clone
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# Netflix Clone (mobile + web):
+* Home page (browse) without playback (no video, just thumbnails)
+* First movie big view (with thumbnail and title)
+* Top10 in Romania list
+* Other categories
+* Netflix Originals (different format)
+* More info page (modal) without playback
+* Series/Films/My List pages
