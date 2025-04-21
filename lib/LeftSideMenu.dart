@@ -5,8 +5,7 @@ class LeftSideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Container(
+    return Container(
           width: 65,
           color: Colors.black,
           child: Column(
@@ -29,8 +28,7 @@ class LeftSideMenu extends StatelessWidget {
                 ),
               ],
           ),
-      ),
-    );
+      );
   }
 }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import 'LeftSideMenu.dart';
+import 'MainScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     return Row(
       children: [
           LeftSideMenu(),
+          MainScreen(),
         ],
     );
   }
