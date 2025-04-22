@@ -22,130 +22,230 @@ class Banner extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
         children: [
-          Image.asset(
-            'assets/images/home_screen/1.jpg',
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.fitWidth,
-            alignment: Alignment.topCenter,
-          ),
+          Stack(
+            children: [
+              Image.asset(
+                'assets/images/home_screen/1.jpg',
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.fitWidth,
+                alignment: Alignment.topCenter,
+              ),
 
-          // Shadows
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 80,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [Colors.black54, Colors.transparent],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 80,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [Colors.black54, Colors.transparent],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: 80,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [Colors.black87, Colors.transparent],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: 80,
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerRight,
-                  end: Alignment.centerLeft,
-                  colors: [Colors.black87, Colors.transparent],
-                ),
-              ),
-            ),
-          ),
-
-          // Title and Description
-          // Tried to use a Row but a pixel line is dividing 2 containers
-          // Try to fix later
-          Positioned(
-            left: 0,
-            bottom: 0,
-            top: 0,
-            child: Container(
-                  width: MediaQuery.of(context).size.width * 0.29,
+              // Shadows
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 80,
+                child: Container(
                   decoration: const BoxDecoration(
-                    color: Colors.black,
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [Colors.black54, Colors.transparent],
+                    ),
                   ),
                 ),
-          ),
-          Positioned(
-            left: MediaQuery.of(context).size.width * 0.29 - 1,
-            top: 0,
-            bottom: 0,
-            child: Container(
-              width: MediaQuery.of(context).size.width * 0.2,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  stops: [0.0, 0.05, 1.0],
-                  colors: [Colors.black, Colors.black, Colors.transparent],
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 80,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [Colors.black54, Colors.transparent],
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
+              Positioned(
+                left: 0,
+                top: 0,
+                bottom: 0,
+                width: 80,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      colors: [Colors.black87, Colors.transparent],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 0,
+                top: 0,
+                bottom: 0,
+                width: 80,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerRight,
+                      end: Alignment.centerLeft,
+                      colors: [Colors.black87, Colors.transparent],
+                    ),
+                  ),
+                ),
+              ),
 
-          // Buttons
-          Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.05,
-            left: MediaQuery.of(context).size.width * 0.05,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                HoverButton(
-                  color: const Color.fromRGBO(169, 13, 13, 1.0),
-                  textColor: Colors.white,
-                  text: "Play",
+              // Title and Description
+              // Tried to use a Row but a pixel line is dividing 2 containers
+              // Try to fix later
+              Positioned(
+                left: 0,
+                bottom: 0,
+                top: 0,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.29,
+                      decoration: const BoxDecoration(
+                        color: Colors.black,
+                      ),
+                    ),
+                    Positioned(
+                      bottom: MediaQuery.of(context).size.height * 0.125,
+                      left: MediaQuery.of(context).size.width * 0.05,
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.star_rate,
+                            color: Colors.white,
+                            size: 35,
+                          ),
+                          Text(
+                            " 8.8 / 10",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Positioned(
+                    bottom: MediaQuery.of(context).size.height * 0.2,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: Container(
+                        // color: Colors.red,
+                        width: MediaQuery.of(context).size.width * 0.23,
+                        child: Center(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Opacity(
+                              opacity: 0.7,
+                              child: Image.asset(
+                                  'assets/images/home_screen/witcher_logo.png',
+                                  width: MediaQuery.of(context).size.width * 0.17,
+                                  height: MediaQuery.of(context).size.width * 0.17,
+                                  fit: BoxFit.fitWidth,
+                                  alignment: Alignment.center,
+                                ),
+                              ),
+                              Text.rich(
+                                softWrap: true,
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: "T".toUpperCase(),
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontFamily: "BebasNeue",
+                                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                                        fontWeight: FontWeight.w700,
+                                        decoration: TextDecoration.none,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 10.0,
+                                            color: Colors.black,
+                                            offset: Offset(5.0, 5.0),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "he Witcher".toUpperCase(),
+                                      style: TextStyle(
+                                        fontFamily: "BebasNeue",
+                                        color: Color.fromRGBO(227, 227, 227, 1.0),
+                                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                                        fontWeight: FontWeight.w500,
+                                        decoration: TextDecoration.none,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 10.0,
+                                            color: Colors.black,
+                                            offset: Offset(5.0, 5.0),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: MediaQuery.of(context).size.width * 0.01),
-                HoverButton(
-                  color: const Color.fromRGBO(227, 227, 227, 1.0),
-                  textColor: Colors.black,
-                  text: "Watch Trailer",
+              ),
+              Positioned(
+                left: MediaQuery.of(context).size.width * 0.29 - 1,
+                top: 0,
+                bottom: 0,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.2,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                      stops: [0.0, 0.05, 1.0],
+                      colors: [Colors.black, Colors.black, Colors.transparent],
+                    ),
+                  ),
                 ),
-              ],
-            ),
-          )
-        ]
+              ),
+
+              // Buttons
+              Positioned(
+                bottom: MediaQuery.of(context).size.height * 0.05,
+                left: MediaQuery.of(context).size.width * 0.05,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    HoverButton(
+                      color: const Color.fromRGBO(169, 13, 13, 1.0),
+                      textColor: Colors.white,
+                      text: "Play",
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                    HoverButton(
+                      color: const Color.fromRGBO(227, 227, 227, 1.0),
+                      textColor: Colors.black,
+                      text: "Watch Trailer",
+                    ),
+                  ],
+                ),
+              )
+            ]
+          ),
+          // To add a grid or columns of text and a row (by categories)
+        ],
     );
   }
 }
