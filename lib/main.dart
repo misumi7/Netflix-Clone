@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:netflix_clone/MyList.dart';
 
+import 'Films.dart';
+import 'HomeScreen.dart';
 import 'LeftSideMenu.dart';
-import 'MainScreen.dart';
+import 'Series.dart';
+import 'TopRomania.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,6 +36,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int _currentPageIndex = 5;
+  final List<Widget> pages = [
+    HomeScreen(),
+    Center( // temp?
+      child: Text(
+        'Search',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 25,
+        ),
+      ),
+    ),
+    Films(),
+    Series(),
+    MyList(),
+    TopRomania(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     // debugPaintSizeEnabled = true;
@@ -39,8 +61,14 @@ class _HomePageState extends State<HomePage> {
       color: Colors.black,
       child: Row(
         children: [
-            LeftSideMenu(),
-            MainScreen(),
+            LeftSideMenu(
+              onPageSelected: (index) {
+                setState(() {
+                  _currentPageIndex = index;
+                });
+              },
+            ),
+            pages[_currentPageIndex],
           ],
       ),
     );

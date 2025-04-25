@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LeftSideMenu extends StatelessWidget {
-  const LeftSideMenu({ super.key });
+  const LeftSideMenu({super.key, required this.onPageSelected});
+
+  final Function(int) onPageSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +29,45 @@ class LeftSideMenu extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     UnderlinedIconButton(
-                        icon: const Icon(Icons.search),
+                      icon: const Icon(Icons.search),
+                      onPressed: () {
+                        onPageSelected(1);
+                      },
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     UnderlinedIconButton(
                       icon: const Icon(Icons.home),
+                      onPressed: () {
+                        onPageSelected(0);
+                      },
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     UnderlinedIconButton(
                       icon: const Icon(Icons.movie),
+                      onPressed: () {
+                        onPageSelected(2);
+                      },
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     UnderlinedIconButton(
                       icon: const Icon(Icons.live_tv),
+                      onPressed: () {
+                        onPageSelected(3);
+                      },
                     ),
                     SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     UnderlinedIconButton(
                       icon: const Icon(Icons.bookmark_added),
+                      onPressed: () {
+                        onPageSelected(4);
+                      },
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+                    UnderlinedIconButton(
+                      icon: const Icon(Icons.trending_up_rounded),
+                      onPressed: () {
+                        onPageSelected(5);
+                      },
                     ),
                   ],
                 ),
@@ -55,8 +79,9 @@ class LeftSideMenu extends StatelessWidget {
 }
 
 class UnderlinedIconButton extends StatefulWidget{
-  const UnderlinedIconButton({super.key, required this.icon});
+  const UnderlinedIconButton({super.key, required this.icon, required this.onPressed});
   final Icon icon;
+  final Function() onPressed;
 
   @override
   State<UnderlinedIconButton> createState() => _UnderlinedIconButtonState();
@@ -72,7 +97,7 @@ class _UnderlinedIconButtonState extends State<UnderlinedIconButton> {
         onExit: (_) => setState(() => _isHovered = false),
         child: GestureDetector(
           onTap: () {
-            print("Icon tapped");
+            widget.onPressed();
           },
           child: Column(
             children: [

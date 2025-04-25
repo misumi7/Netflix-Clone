@@ -1,15 +1,16 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _MainScreenState extends State<MainScreen>{
+class _HomeScreenState extends State<HomeScreen>{
   late Timer timer;
   int currentBannerIndex = 0;
   final List<Banner> banners = [
@@ -41,6 +42,7 @@ class _MainScreenState extends State<MainScreen>{
       titleTopPadding: 0.27,
     ),
   ];
+
 
   @override
   void initState() {
@@ -224,50 +226,50 @@ class _MovieSliderState extends State<MovieSlider> {
           ScrollConfiguration(
             behavior: NoScrollBehaviour(),
             child: ListView.builder(
-              controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.movieList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.005,
-                    bottom: MediaQuery.of(context).size.height * 0.005,
-                    left: MediaQuery.of(context).size.width * 0.001,
-                    right: MediaQuery.of(context).size.width * 0.001,
-                  ),
-                  child: Image.asset(
-                    width: widget.itemSize,
-                    widget.movieList[index],
-                    fit: BoxFit.contain,
-                    alignment: Alignment.center,
-                  ),
-                );
-              }
+                controller: _scrollController,
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.movieList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.005,
+                      bottom: MediaQuery.of(context).size.height * 0.005,
+                      left: MediaQuery.of(context).size.width * 0.001,
+                      right: MediaQuery.of(context).size.width * 0.001,
+                    ),
+                    child: Image.asset(
+                      width: widget.itemSize,
+                      widget.movieList[index],
+                      fit: BoxFit.contain,
+                      alignment: Alignment.center,
+                    ),
+                  );
+                }
             ),
           ),
           Positioned(
-              left: MediaQuery.of(context).size.width * 0.01,
-              top: 0,
-              bottom: 0,
-              child: IconButton(
-                  onPressed: _scrollLeft,
-                  icon: Icon(
-                    Icons.chevron_left_rounded,
-                    color: Colors.white70,
-                  ),
+            left: MediaQuery.of(context).size.width * 0.01,
+            top: 0,
+            bottom: 0,
+            child: IconButton(
+              onPressed: _scrollLeft,
+              icon: Icon(
+                Icons.chevron_left_rounded,
+                color: Colors.white70,
               ),
+            ),
           ),
           Positioned(
-              right: MediaQuery.of(context).size.width * 0.01,
-              top: 0,
-              bottom: 0,
-              child: IconButton(
-                  onPressed: _scrollRight,
-                  icon: Icon(
-                    Icons.chevron_right_rounded,
-                    color: Colors.white70,
-                  ),
+            right: MediaQuery.of(context).size.width * 0.01,
+            top: 0,
+            bottom: 0,
+            child: IconButton(
+              onPressed: _scrollRight,
+              icon: Icon(
+                Icons.chevron_right_rounded,
+                color: Colors.white70,
               ),
+            ),
           ),
         ],
       ),
@@ -302,232 +304,232 @@ class Banner extends StatelessWidget{
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Stack(
+      children: [
+        Image.asset(
+          bannerPath,
+          width: screenWidth,
+          fit: BoxFit.cover,
+          alignment: Alignment.topCenter,
+        ),
+
+        // Shadows
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 80,
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.black54, Colors.transparent],
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: -1,
+          left: 0,
+          right: 0,
+          height: 80,
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                stops: [0.0, 0.05, 1.0],
+                colors: [Colors.black, Colors.black, Colors.transparent],
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: 80,
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                colors: [Colors.black87, Colors.transparent],
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: 80,
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft,
+                colors: [Colors.black87, Colors.transparent],
+              ),
+            ),
+          ),
+        ),
+
+        // Title and Description
+        // Tried to use a Row but a pixel line is dividing 2 containers
+        // Try to fix later
+        Positioned(
+          left: -1,
+          bottom: 0,
+          top: 0,
+          child: Stack(
             children: [
-              Image.asset(
-                bannerPath,
-                width: screenWidth,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              ),
-
-              // Shadows
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                height: 80,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [Colors.black54, Colors.transparent],
-                    ),
-                  ),
+              Container(
+                width: screenWidth * 0.29,
+                decoration: const BoxDecoration(
+                  color: Colors.black,
                 ),
               ),
               Positioned(
-                bottom: -1,
-                left: 0,
-                right: 0,
-                height: 80,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      stops: [0.0, 0.05, 1.0],
-                      colors: [Colors.black, Colors.black, Colors.transparent],
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                top: 0,
-                bottom: 0,
-                width: 80,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Colors.black87, Colors.transparent],
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                right: 0,
-                top: 0,
-                bottom: 0,
-                width: 80,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerRight,
-                      end: Alignment.centerLeft,
-                      colors: [Colors.black87, Colors.transparent],
-                    ),
-                  ),
-                ),
-              ),
-
-              // Title and Description
-              // Tried to use a Row but a pixel line is dividing 2 containers
-              // Try to fix later
-              Positioned(
-                left: -1,
-                bottom: 0,
-                top: 0,
-                child: Stack(
+                bottom: screenHeight * 0.125,
+                left: screenWidth * 0.018,
+                child: Row(
                   children: [
-                    Container(
-                      width: screenWidth * 0.29,
-                      decoration: const BoxDecoration(
-                        color: Colors.black,
+                    Icon(
+                      Icons.star_rate,
+                      color: Colors.white,
+                      size: screenWidth * 0.02,
+                    ),
+                    Text(
+                      rating,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: screenWidth * 0.018,
+                        fontWeight: FontWeight.w500,
+                        decoration: TextDecoration.none,
                       ),
                     ),
-                    Positioned(
-                      bottom: screenHeight * 0.125,
-                      left: screenWidth * 0.018,
-                      child: Row(
+                  ],
+                ),
+              ),
+              Positioned(
+                bottom: screenHeight * 0.2,
+                left: 0,
+                right: 0,
+                child: Center(
+                  child: SizedBox(
+                    // color: Colors.red,
+                    width: screenWidth * 0.23,
+                    child: Center(
+                      child: Stack(
+                        alignment: Alignment.center,
                         children: [
-                          Icon(
-                            Icons.star_rate,
-                            color: Colors.white,
-                            size: screenWidth * 0.02,
-                          ),
-                          Text(
-                            rating,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: screenWidth * 0.018,
-                              fontWeight: FontWeight.w500,
-                              decoration: TextDecoration.none,
+                          Opacity(
+                            opacity: title.isNotEmpty ? 0.7 : 0.9,
+                            child: Image.asset(
+                              logoPath,
+                              width: screenWidth * logoSize,
+                              height: screenWidth * logoSize,
+                              fit: BoxFit.fitWidth,
+                              alignment: Alignment.center,
                             ),
                           ),
+                          if(title.isNotEmpty)
+                            Container(
+                              padding: EdgeInsets.only(
+                                top: screenHeight * titleTopPadding,
+                              ),
+                              child: Text.rich(
+                                softWrap: true,
+                                TextSpan(
+                                  children: [
+                                    TextSpan(
+                                      text: title[0].toUpperCase(),
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontFamily: "BebasNeue",
+                                        fontSize: screenWidth * 0.05,
+                                        fontWeight: FontWeight.w700,
+                                        decoration: TextDecoration.none,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 10.0,
+                                            color: Colors.black,
+                                            offset: Offset(5.0, 5.0),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: title.substring(1).toUpperCase(),
+                                      style: TextStyle(
+                                        fontFamily: "BebasNeue",
+                                        color: Color.fromRGBO(
+                                            227, 227, 227, 1.0),
+                                        fontSize: screenWidth * 0.05,
+                                        fontWeight: FontWeight.w500,
+                                        decoration: TextDecoration.none,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 10.0,
+                                            color: Colors.black,
+                                            offset: Offset(5.0, 5.0),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                         ],
                       ),
                     ),
-                    Positioned(
-                    bottom: screenHeight * 0.2,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: SizedBox(
-                        // color: Colors.red,
-                        width: screenWidth * 0.23,
-                        child: Center(
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Opacity(
-                              opacity: title.isNotEmpty ? 0.7 : 0.9,
-                              child: Image.asset(
-                                  logoPath,
-                                  width: screenWidth * logoSize,
-                                  height: screenWidth * logoSize,
-                                  fit: BoxFit.fitWidth,
-                                  alignment: Alignment.center,
-                                ),
-                              ),
-                              if(title.isNotEmpty)
-                                Container(
-                                  padding: EdgeInsets.only(
-                                    top: screenHeight * titleTopPadding,
-                                  ),
-                                  child: Text.rich(
-                                    softWrap: true,
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: title[0].toUpperCase(),
-                                          style: TextStyle(
-                                            color: Colors.red,
-                                            fontFamily: "BebasNeue",
-                                            fontSize: screenWidth * 0.05,
-                                            fontWeight: FontWeight.w700,
-                                            decoration: TextDecoration.none,
-                                            shadows: [
-                                              Shadow(
-                                                blurRadius: 10.0,
-                                                color: Colors.black,
-                                                offset: Offset(5.0, 5.0),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: title.substring(1).toUpperCase(),
-                                          style: TextStyle(
-                                            fontFamily: "BebasNeue",
-                                            color: Color.fromRGBO(
-                                                227, 227, 227, 1.0),
-                                            fontSize: screenWidth * 0.05,
-                                            fontWeight: FontWeight.w500,
-                                            decoration: TextDecoration.none,
-                                            shadows: [
-                                              Shadow(
-                                                blurRadius: 10.0,
-                                                color: Colors.black,
-                                                offset: Offset(5.0, 5.0),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                left: screenWidth * 0.29 - 2,
-                top: 0,
-                bottom: 0,
-                child: Container(
-                  width: screenWidth * 0.2,
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      stops: [0.0, 0.05, 1.0],
-                      colors: [Colors.black, Colors.black, Colors.transparent],
-                    ),
                   ),
                 ),
               ),
-
-              // Buttons
-              Positioned(
-                bottom: screenHeight * 0.05,
-                left: screenWidth * 0.018,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    HoverButton(
-                      color: const Color.fromRGBO(169, 13, 13, 1.0),
-                      textColor: Colors.white,
-                      text: "Play",
-                    ),
-                    SizedBox(width: screenWidth * 0.01),
-                    HoverButton(
-                      color: const Color.fromRGBO(227, 227, 227, 1.0),
-                      textColor: Colors.black,
-                      text: "Watch Trailer",
-                    ),
-                  ],
-                ),
-              )
             ],
+          ),
+        ),
+        Positioned(
+          left: screenWidth * 0.29 - 2,
+          top: 0,
+          bottom: 0,
+          child: Container(
+            width: screenWidth * 0.2,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+                stops: [0.0, 0.05, 1.0],
+                colors: [Colors.black, Colors.black, Colors.transparent],
+              ),
+            ),
+          ),
+        ),
+
+        // Buttons
+        Positioned(
+          bottom: screenHeight * 0.05,
+          left: screenWidth * 0.018,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              HoverButton(
+                color: const Color.fromRGBO(169, 13, 13, 1.0),
+                textColor: Colors.white,
+                text: "Play",
+              ),
+              SizedBox(width: screenWidth * 0.01),
+              HoverButton(
+                color: const Color.fromRGBO(227, 227, 227, 1.0),
+                textColor: Colors.black,
+                text: "Watch Trailer",
+              ),
+            ],
+          ),
+        )
+      ],
     );
   }
 }
@@ -553,32 +555,32 @@ class _HoverButtonState extends State<HoverButton> {
     EdgeInsets padding = EdgeInsets.symmetric(horizontal: screenWidth * 0.03, vertical: screenHeight * 0.015);
 
     return FittedBox(
-        child: MouseRegion(
-          onEnter: (_) => setState(() => _isHovered = true),
-          onExit: (_) => setState(() => _isHovered = false),
-          child: GestureDetector(
-            onTap: () {
-              print("Button tapped");
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 100),
-              padding: padding,
-              decoration: BoxDecoration(
-                color: _isHovered ? widget.color.withOpacity(0.85) : widget.color,
-                borderRadius: BorderRadius.circular(35),
-              ),
-              child: Text(
-                widget.text,
-                style: TextStyle(
-                  color: widget.textColor,
-                  fontSize: MediaQuery.of(context).size.width * 0.012,
-                  fontWeight: FontWeight.w400,
-                  decoration: TextDecoration.none,
-                ),
+      child: MouseRegion(
+        onEnter: (_) => setState(() => _isHovered = true),
+        onExit: (_) => setState(() => _isHovered = false),
+        child: GestureDetector(
+          onTap: () {
+            print("Button tapped");
+          },
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 100),
+            padding: padding,
+            decoration: BoxDecoration(
+              color: _isHovered ? widget.color.withOpacity(0.85) : widget.color,
+              borderRadius: BorderRadius.circular(35),
+            ),
+            child: Text(
+              widget.text,
+              style: TextStyle(
+                color: widget.textColor,
+                fontSize: MediaQuery.of(context).size.width * 0.012,
+                fontWeight: FontWeight.w400,
+                decoration: TextDecoration.none,
               ),
             ),
           ),
         ),
+      ),
     );
   }
 }
