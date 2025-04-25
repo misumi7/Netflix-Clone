@@ -61,9 +61,13 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/home_screen/witcher_banner.jpg
+    - assets/images/home_screen/sopranos_banner.jpg
+    - assets/images/home_screen/housemd_banner.jpg
     - assets/images/home_screen/1.jpg
     - assets/images/home_screen/preview.jpg
     - assets/images/home_screen/witcher_logo.png
+    - assets/images/home_screen/sopranos_logo.png
+    - assets/images/home_screen/housemd_logo.png
     - assets/images/logo.png
 
   fonts:

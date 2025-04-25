@@ -12,11 +12,13 @@ class LeftSideMenu extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 14),
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.05,
+                ),
                 child: Image.asset(
                   'assets/images/logo.png',
-                  width: 50,
-                  height: 50,
+                  width: MediaQuery.of(context).size.width * 0.075,
+                  height: MediaQuery.of(context).size.height * 0.075,
                   alignment: Alignment.center,
                 ),
               ),
@@ -27,19 +29,19 @@ class LeftSideMenu extends StatelessWidget {
                     UnderlinedIconButton(
                         icon: const Icon(Icons.search),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     UnderlinedIconButton(
                       icon: const Icon(Icons.home),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     UnderlinedIconButton(
                       icon: const Icon(Icons.movie),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     UnderlinedIconButton(
                       icon: const Icon(Icons.live_tv),
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                     UnderlinedIconButton(
                       icon: const Icon(Icons.bookmark_added),
                     ),

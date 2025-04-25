@@ -1,7 +1,62 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatelessWidget{
+class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
+
+  @override
+  State<MainScreen> createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen>{
+  late Timer timer;
+  int currentBannerIndex = 0;
+  final List<Banner> banners = [
+    Banner(
+      key: ValueKey(0),
+      bannerPath: 'assets/images/home_screen/witcher_banner.jpg',
+      logoPath: 'assets/images/home_screen/witcher_logo.png',
+      logoSize: 0.17,
+      title: 'The Witcher',
+      rating: ' 8.2 / 10',
+      titleTopPadding: 0.01,
+    ),
+    Banner(
+      key: ValueKey(1),
+      bannerPath: 'assets/images/home_screen/sopranos_banner.jpg',
+      logoPath: 'assets/images/home_screen/sopranos_logo.png',
+      logoSize: 0.22,
+      title: '',
+      rating: ' 9.4 / 10',
+      titleTopPadding: 0,
+    ),
+    Banner(
+      key: ValueKey(2),
+      bannerPath: 'assets/images/home_screen/housemd_banner.jpg',
+      logoPath: 'assets/images/home_screen/housemd_logo.png',
+      logoSize: 0.22,
+      title: 'House, M.D.',
+      rating: ' 9.6 / 10',
+      titleTopPadding: 0.27,
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
+      setState(() {
+        currentBannerIndex = (currentBannerIndex + 1) % banners.length;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +67,15 @@ class MainScreen extends StatelessWidget{
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Banner(),
+            AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              switchInCurve: Curves.easeIn,
+              switchOutCurve: Curves.easeOut,
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return FadeTransition(opacity: animation, child: child);
+              },
+              child: banners[currentBannerIndex],
+            ),
 
             Container(
               width: screenWidth,
@@ -225,7 +288,14 @@ class NoScrollBehaviour extends ScrollBehavior {
 }
 
 class Banner extends StatelessWidget{
-  const Banner({super.key});
+  const Banner({super.key, required this.titleTopPadding, required this.logoPath, required this.bannerPath, required this.logoSize, required this.title, required this.rating});
+
+  final String bannerPath;
+  final String logoPath;
+  final double logoSize;
+  final String title;
+  final String rating;
+  final double titleTopPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -234,7 +304,7 @@ class Banner extends StatelessWidget{
     return Stack(
             children: [
               Image.asset(
-                'assets/images/home_screen/witcher_banner.jpg',
+                bannerPath,
                 width: screenWidth,
                 fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
@@ -257,7 +327,7 @@ class Banner extends StatelessWidget{
                 ),
               ),
               Positioned(
-                bottom: 0,
+                bottom: -1,
                 left: 0,
                 right: 0,
                 height: 80,
@@ -307,7 +377,7 @@ class Banner extends StatelessWidget{
               // Tried to use a Row but a pixel line is dividing 2 containers
               // Try to fix later
               Positioned(
-                left: 0,
+                left: -1,
                 bottom: 0,
                 top: 0,
                 child: Stack(
@@ -329,7 +399,7 @@ class Banner extends StatelessWidget{
                             size: screenWidth * 0.02,
                           ),
                           Text(
-                            " 8.8 / 10",
+                            rating,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: screenWidth * 0.018,
@@ -353,56 +423,63 @@ class Banner extends StatelessWidget{
                             alignment: Alignment.center,
                             children: [
                               Opacity(
-                              opacity: 0.7,
+                              opacity: title.isNotEmpty ? 0.7 : 0.9,
                               child: Image.asset(
-                                  'assets/images/home_screen/witcher_logo.png',
-                                  width: screenWidth * 0.17,
-                                  height: screenWidth * 0.17,
+                                  logoPath,
+                                  width: screenWidth * logoSize,
+                                  height: screenWidth * logoSize,
                                   fit: BoxFit.fitWidth,
                                   alignment: Alignment.center,
                                 ),
                               ),
-                              Text.rich(
-                                softWrap: true,
-                                TextSpan(
-                                  children: [
+                              if(title.isNotEmpty)
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    top: screenHeight * titleTopPadding,
+                                  ),
+                                  child: Text.rich(
+                                    softWrap: true,
                                     TextSpan(
-                                      text: "T".toUpperCase(),
-                                      style: TextStyle(
-                                        color: Colors.red,
-                                        fontFamily: "BebasNeue",
-                                        fontSize: screenWidth * 0.05,
-                                        fontWeight: FontWeight.w700,
-                                        decoration: TextDecoration.none,
-                                        shadows: [
-                                          Shadow(
-                                            blurRadius: 10.0,
-                                            color: Colors.black,
-                                            offset: Offset(5.0, 5.0),
+                                      children: [
+                                        TextSpan(
+                                          text: title[0].toUpperCase(),
+                                          style: TextStyle(
+                                            color: Colors.red,
+                                            fontFamily: "BebasNeue",
+                                            fontSize: screenWidth * 0.05,
+                                            fontWeight: FontWeight.w700,
+                                            decoration: TextDecoration.none,
+                                            shadows: [
+                                              Shadow(
+                                                blurRadius: 10.0,
+                                                color: Colors.black,
+                                                offset: Offset(5.0, 5.0),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: "he Witcher".toUpperCase(),
-                                      style: TextStyle(
-                                        fontFamily: "BebasNeue",
-                                        color: Color.fromRGBO(227, 227, 227, 1.0),
-                                        fontSize: screenWidth * 0.05,
-                                        fontWeight: FontWeight.w500,
-                                        decoration: TextDecoration.none,
-                                        shadows: [
-                                          Shadow(
-                                            blurRadius: 10.0,
-                                            color: Colors.black,
-                                            offset: Offset(5.0, 5.0),
+                                        ),
+                                        TextSpan(
+                                          text: title.substring(1).toUpperCase(),
+                                          style: TextStyle(
+                                            fontFamily: "BebasNeue",
+                                            color: Color.fromRGBO(
+                                                227, 227, 227, 1.0),
+                                            fontSize: screenWidth * 0.05,
+                                            fontWeight: FontWeight.w500,
+                                            decoration: TextDecoration.none,
+                                            shadows: [
+                                              Shadow(
+                                                blurRadius: 10.0,
+                                                color: Colors.black,
+                                                offset: Offset(5.0, 5.0),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              ),
                             ],
                           ),
                         ),
@@ -413,7 +490,7 @@ class Banner extends StatelessWidget{
                 ),
               ),
               Positioned(
-                left: screenWidth * 0.29 - 1,
+                left: screenWidth * 0.29 - 2,
                 top: 0,
                 bottom: 0,
                 child: Container(
