@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   provider: ^5.0.0
+  font_awesome_flutter: ^10.5.0
+  scroll_snap_list: ^0.9.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -58,9 +60,11 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/images/home_screen/witcher_banner.jpg
     - assets/images/home_screen/1.jpg
     - assets/images/home_screen/preview.jpg
     - assets/images/home_screen/witcher_logo.png
+    - assets/images/logo.png
 
   fonts:
     - family: BebasNeue

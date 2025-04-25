@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MainScreen extends StatelessWidget{
@@ -6,14 +5,222 @@ class MainScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Expanded(
-      child: Column(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Banner(),
+
+            Container(
+              width: screenWidth,
+              color: Colors.black,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: screenWidth * 0.008,
+                ),
+                child: Text(
+                  "Because you watched House of Cards",
+                  style: TextStyle(
+                    color: Color.fromRGBO(227, 227, 227, 1.0),
+                    fontSize: screenWidth * 0.017,
+                    fontWeight: FontWeight.w800,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+              ),
+            ),
+            MovieSlider(itemSize: MediaQuery.of(context).size.width * 0.09, movieList: ["assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg"]),
+
+            Container(
+              width: screenWidth,
+              color: Colors.black,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: screenWidth * 0.008,
+                  top: screenHeight * 0.016,
+                ),
+                child: Text(
+                  "Popular on Netflex",
+                  style: TextStyle(
+                    color: Color.fromRGBO(227, 227, 227, 1.0),
+                    fontSize: screenWidth * 0.017,
+                    fontWeight: FontWeight.w800,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+              ),
+            ),
+            MovieSlider(itemSize: MediaQuery.of(context).size.width * 0.09, movieList: ["assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg"]),
+
+            Container(
+              width: screenWidth,
+              color: Colors.black,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: screenWidth * 0.008,
+                  top: screenHeight * 0.016,
+                ),
+                child: Text(
+                  "Trending Now",
+                  style: TextStyle(
+                    color: Color.fromRGBO(227, 227, 227, 1.0),
+                    fontSize: screenWidth * 0.017,
+                    fontWeight: FontWeight.w800,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+              ),
+            ),
+            MovieSlider(itemSize: MediaQuery.of(context).size.width * 0.09, movieList: ["assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg"]),
+
+            Container(
+              width: screenWidth,
+              color: Colors.black,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: screenWidth * 0.008,
+                  top: screenHeight * 0.016,
+                ),
+                child: Text(
+                  "New this week",
+                  style: TextStyle(
+                    color: Color.fromRGBO(227, 227, 227, 1.0),
+                    fontSize: screenWidth * 0.017,
+                    fontWeight: FontWeight.w800,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+              ),
+            ),
+            MovieSlider(itemSize: MediaQuery.of(context).size.width * 0.09, movieList: ["assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg"]),
+
+            // Final padding
+            SizedBox(
+              width: screenWidth,
+              height: screenHeight * 0.03,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MovieSlider extends StatefulWidget {
+  const MovieSlider({super.key, required this.movieList, required this.itemSize});
+
+  final List<String> movieList;
+  final double itemSize;
+
+  @override
+  State<MovieSlider> createState() => _MovieSliderState();
+}
+
+class _MovieSliderState extends State<MovieSlider> {
+  final ScrollController _scrollController = ScrollController();
+  bool _isAnimating = false;
+
+  void _scrollRight() async{
+    if (!_isAnimating && _scrollController.offset + _scrollController.offset + widget.itemSize + MediaQuery.of(context).size.width * 0.002 < _scrollController.position.maxScrollExtent) {
+      setState(() {
+        _isAnimating = true;
+      });
+      await _scrollController.animateTo(_scrollController.offset + widget.itemSize + MediaQuery.of(context).size.width * 0.002,
+          duration: Duration(milliseconds: 200), curve: Curves.ease);
+      setState(() {
+        _isAnimating = false;
+      });
+    }
+  }
+
+  void _scrollLeft() async{
+    if (!_isAnimating && _scrollController.offset - widget.itemSize - MediaQuery.of(context).size.width * 0.002 > _scrollController.position.minScrollExtent) {
+      setState(() {
+        _isAnimating = true;
+      });
+      await _scrollController.animateTo(_scrollController.offset - widget.itemSize - MediaQuery.of(context).size.width * 0.002,
+          duration: Duration(milliseconds: 200), curve: Curves.ease);
+      setState(() {
+        _isAnimating = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(
+        // left: MediaQuery.of(context).size.width * 0.02,
+      ),
+      height: MediaQuery.of(context).size.height * 0.3,
+      child: Stack(
         children: [
-          Banner(),
-          const SizedBox(height: 20),
+          ScrollConfiguration(
+            behavior: NoScrollBehaviour(),
+            child: ListView.builder(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.movieList.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.005,
+                    bottom: MediaQuery.of(context).size.height * 0.005,
+                    left: MediaQuery.of(context).size.width * 0.001,
+                    right: MediaQuery.of(context).size.width * 0.001,
+                  ),
+                  child: Image.asset(
+                    width: widget.itemSize,
+                    widget.movieList[index],
+                    fit: BoxFit.contain,
+                    alignment: Alignment.center,
+                  ),
+                );
+              }
+            ),
+          ),
+          Positioned(
+              left: MediaQuery.of(context).size.width * 0.01,
+              top: 0,
+              bottom: 0,
+              child: IconButton(
+                  onPressed: _scrollLeft,
+                  icon: Icon(
+                    Icons.chevron_left_rounded,
+                    color: Colors.white70,
+                  ),
+              ),
+          ),
+          Positioned(
+              right: MediaQuery.of(context).size.width * 0.01,
+              top: 0,
+              bottom: 0,
+              child: IconButton(
+                  onPressed: _scrollRight,
+                  icon: Icon(
+                    Icons.chevron_right_rounded,
+                    color: Colors.white70,
+                  ),
+              ),
+          ),
         ],
       ),
     );
+  }
+}
+
+class NoScrollBehaviour extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    return const NeverScrollableScrollPhysics(); // turn off the scrolling
   }
 }
 
@@ -22,14 +229,14 @@ class Banner extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-        children: [
-          Stack(
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    return Stack(
             children: [
               Image.asset(
-                'assets/images/home_screen/1.jpg',
-                width: MediaQuery.of(context).size.width,
-                fit: BoxFit.fitWidth,
+                'assets/images/home_screen/witcher_banner.jpg',
+                width: screenWidth,
+                fit: BoxFit.cover,
                 alignment: Alignment.topCenter,
               ),
 
@@ -59,7 +266,8 @@ class Banner extends StatelessWidget{
                     gradient: LinearGradient(
                       begin: Alignment.bottomCenter,
                       end: Alignment.topCenter,
-                      colors: [Colors.black54, Colors.transparent],
+                      stops: [0.0, 0.05, 1.0],
+                      colors: [Colors.black, Colors.black, Colors.transparent],
                     ),
                   ),
                 ),
@@ -105,26 +313,26 @@ class Banner extends StatelessWidget{
                 child: Stack(
                   children: [
                     Container(
-                      width: MediaQuery.of(context).size.width * 0.29,
+                      width: screenWidth * 0.29,
                       decoration: const BoxDecoration(
                         color: Colors.black,
                       ),
                     ),
                     Positioned(
-                      bottom: MediaQuery.of(context).size.height * 0.125,
-                      left: MediaQuery.of(context).size.width * 0.05,
+                      bottom: screenHeight * 0.125,
+                      left: screenWidth * 0.018,
                       child: Row(
                         children: [
                           Icon(
                             Icons.star_rate,
                             color: Colors.white,
-                            size: 35,
+                            size: screenWidth * 0.02,
                           ),
                           Text(
                             " 8.8 / 10",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontSize: screenWidth * 0.018,
                               fontWeight: FontWeight.w500,
                               decoration: TextDecoration.none,
                             ),
@@ -133,13 +341,13 @@ class Banner extends StatelessWidget{
                       ),
                     ),
                     Positioned(
-                    bottom: MediaQuery.of(context).size.height * 0.2,
+                    bottom: screenHeight * 0.2,
                     left: 0,
                     right: 0,
                     child: Center(
-                      child: Container(
+                      child: SizedBox(
                         // color: Colors.red,
-                        width: MediaQuery.of(context).size.width * 0.23,
+                        width: screenWidth * 0.23,
                         child: Center(
                           child: Stack(
                             alignment: Alignment.center,
@@ -148,8 +356,8 @@ class Banner extends StatelessWidget{
                               opacity: 0.7,
                               child: Image.asset(
                                   'assets/images/home_screen/witcher_logo.png',
-                                  width: MediaQuery.of(context).size.width * 0.17,
-                                  height: MediaQuery.of(context).size.width * 0.17,
+                                  width: screenWidth * 0.17,
+                                  height: screenWidth * 0.17,
                                   fit: BoxFit.fitWidth,
                                   alignment: Alignment.center,
                                 ),
@@ -163,7 +371,7 @@ class Banner extends StatelessWidget{
                                       style: TextStyle(
                                         color: Colors.red,
                                         fontFamily: "BebasNeue",
-                                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                                        fontSize: screenWidth * 0.05,
                                         fontWeight: FontWeight.w700,
                                         decoration: TextDecoration.none,
                                         shadows: [
@@ -180,7 +388,7 @@ class Banner extends StatelessWidget{
                                       style: TextStyle(
                                         fontFamily: "BebasNeue",
                                         color: Color.fromRGBO(227, 227, 227, 1.0),
-                                        fontSize: MediaQuery.of(context).size.width * 0.05,
+                                        fontSize: screenWidth * 0.05,
                                         fontWeight: FontWeight.w500,
                                         decoration: TextDecoration.none,
                                         shadows: [
@@ -205,11 +413,11 @@ class Banner extends StatelessWidget{
                 ),
               ),
               Positioned(
-                left: MediaQuery.of(context).size.width * 0.29 - 1,
+                left: screenWidth * 0.29 - 1,
                 top: 0,
                 bottom: 0,
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.2,
+                  width: screenWidth * 0.2,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.centerLeft,
@@ -223,8 +431,8 @@ class Banner extends StatelessWidget{
 
               // Buttons
               Positioned(
-                bottom: MediaQuery.of(context).size.height * 0.05,
-                left: MediaQuery.of(context).size.width * 0.05,
+                bottom: screenHeight * 0.05,
+                left: screenWidth * 0.018,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -233,7 +441,7 @@ class Banner extends StatelessWidget{
                       textColor: Colors.white,
                       text: "Play",
                     ),
-                    SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                    SizedBox(width: screenWidth * 0.01),
                     HoverButton(
                       color: const Color.fromRGBO(227, 227, 227, 1.0),
                       textColor: Colors.black,
@@ -242,10 +450,7 @@ class Banner extends StatelessWidget{
                   ],
                 ),
               )
-            ]
-          ),
-          // To add a grid or columns of text and a row (by categories)
-        ],
+            ],
     );
   }
 }
@@ -265,6 +470,11 @@ class _HoverButtonState extends State<HoverButton> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
+    EdgeInsets padding = EdgeInsets.symmetric(horizontal: screenWidth * 0.03, vertical: screenHeight * 0.015);
+
     return FittedBox(
         child: MouseRegion(
           onEnter: (_) => setState(() => _isHovered = true),
@@ -275,7 +485,7 @@ class _HoverButtonState extends State<HoverButton> {
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 100),
-              padding: const EdgeInsets.fromLTRB(45, 12, 45, 12),
+              padding: padding,
               decoration: BoxDecoration(
                 color: _isHovered ? widget.color.withOpacity(0.85) : widget.color,
                 borderRadius: BorderRadius.circular(35),
@@ -284,7 +494,7 @@ class _HoverButtonState extends State<HoverButton> {
                 widget.text,
                 style: TextStyle(
                   color: widget.textColor,
-                  fontSize: 18,
+                  fontSize: MediaQuery.of(context).size.width * 0.012,
                   fontWeight: FontWeight.w400,
                   decoration: TextDecoration.none,
                 ),

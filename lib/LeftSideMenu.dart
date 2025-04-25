@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LeftSideMenu extends StatelessWidget {
   const LeftSideMenu({ super.key });
@@ -6,27 +7,46 @@ class LeftSideMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-          width: 65,
+          width: MediaQuery.of(context).size.width * 0.07,
           color: Colors.black,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-                UnderlinedIconButton(
-                  icon: const Icon(Icons.home),
+              Padding(
+                padding: const EdgeInsets.only(top: 14),
+                child: Image.asset(
+                  'assets/images/logo.png',
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
                 ),
-                const SizedBox(height: 20),
-                UnderlinedIconButton(
-                  icon: const Icon(Icons.movie),
+              ),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    UnderlinedIconButton(
+                        icon: const Icon(Icons.search),
+                    ),
+                    const SizedBox(height: 20),
+                    UnderlinedIconButton(
+                      icon: const Icon(Icons.home),
+                    ),
+                    const SizedBox(height: 20),
+                    UnderlinedIconButton(
+                      icon: const Icon(Icons.movie),
+                    ),
+                    const SizedBox(height: 20),
+                    UnderlinedIconButton(
+                      icon: const Icon(Icons.live_tv),
+                    ),
+                    const SizedBox(height: 20),
+                    UnderlinedIconButton(
+                      icon: const Icon(Icons.bookmark_added),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 20),
-                UnderlinedIconButton(
-                  icon: const Icon(Icons.tv),
-                ),
-                const SizedBox(height: 20),
-                UnderlinedIconButton(
-                  icon: const Icon(Icons.plus_one_sharp),
-                ),
-              ],
+              ),
+            ],
           ),
       );
   }

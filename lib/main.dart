@@ -34,11 +34,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-          LeftSideMenu(),
-          MainScreen(),
-        ],
+    // debugPaintSizeEnabled = true;
+    return Container(
+      color: Colors.black,
+      child: Row(
+        children: [
+            LeftSideMenu(),
+            MainScreen(),
+          ],
+      ),
     );
   }
 }
