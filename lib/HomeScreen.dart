@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:math';
 
+// import 'package:faker/faker.dart' as faker;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,11 +17,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>{
   late Timer timer;
   int currentBannerIndex = 0;
+  int currentMovieIndex = 20;
   final List<Banner> banners = [
     Banner(
       key: ValueKey(0),
-      bannerPath: 'assets/images/home_screen/witcher_banner.jpg',
-      logoPath: 'assets/images/home_screen/witcher_logo.png',
+      bannerPath: 'assets/images/home_screen/banners/witcher_banner.jpg',
+      logoPath: 'assets/images/home_screen/logos/witcher_logo.png',
       logoSize: 0.17,
       title: 'The Witcher',
       rating: ' 8.2 / 10',
@@ -25,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen>{
     ),
     Banner(
       key: ValueKey(1),
-      bannerPath: 'assets/images/home_screen/sopranos_banner.jpg',
-      logoPath: 'assets/images/home_screen/sopranos_logo.png',
+      bannerPath: 'assets/images/home_screen/banners/sopranos_banner.jpg',
+      logoPath: 'assets/images/home_screen/logos/sopranos_logo.png',
       logoSize: 0.22,
       title: '',
       rating: ' 9.4 / 10',
@@ -34,8 +39,8 @@ class _HomeScreenState extends State<HomeScreen>{
     ),
     Banner(
       key: ValueKey(2),
-      bannerPath: 'assets/images/home_screen/housemd_banner.jpg',
-      logoPath: 'assets/images/home_screen/housemd_logo.png',
+      bannerPath: 'assets/images/home_screen/banners/housemd_banner.jpg',
+      logoPath: 'assets/images/home_screen/logos/housemd_logo.png',
       logoSize: 0.22,
       title: 'House, M.D.',
       rating: ' 9.6 / 10',
@@ -43,6 +48,8 @@ class _HomeScreenState extends State<HomeScreen>{
     ),
   ];
 
+  // REMOVE WHEN MY LIST
+  bool _isInMyList = false;
 
   @override
   void initState() {
@@ -65,120 +72,527 @@ class _HomeScreenState extends State<HomeScreen>{
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            AnimatedSwitcher(
-              duration: Duration(milliseconds: 500),
-              switchInCurve: Curves.easeIn,
-              switchOutCurve: Curves.easeOut,
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return FadeTransition(opacity: animation, child: child);
-              },
-              child: banners[currentBannerIndex],
-            ),
+    final List<String> posters = [];
+    for (int i = 0; i < 59; ++i){
+      posters.add("assets/images/home_screen/posters/poster_${i}.jpg");
+    }
 
+    return Stack(
+        children: [
+          SizedBox(
+            width: screenWidth * 0.93,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  AnimatedSwitcher(
+                    duration: Duration(milliseconds: 500),
+                    switchInCurve: Curves.easeIn,
+                    switchOutCurve: Curves.easeOut,
+                    transitionBuilder: (Widget child, Animation<double> animation) {
+                      return FadeTransition(opacity: animation, child: child);
+                    },
+                    child: banners[currentBannerIndex],
+                  ),
+
+                  Container(
+                    width: screenWidth,
+                    color: Colors.black,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: screenWidth * 0.008,
+                      ),
+                      child: Text(
+                        "Because you watched House of Cards",
+                        style: TextStyle(
+                          color: Color.fromRGBO(227, 227, 227, 1.0),
+                          fontSize: screenWidth * 0.017,
+                          fontWeight: FontWeight.w800,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                  MovieSlider(
+                    itemSize: (MediaQuery.of(context).size.width * 0.1).roundToDouble(),
+                    movieList: posters.sublist(0, 15),
+                    onMovieTap: (int index) {
+                      setState(() {
+                        currentMovieIndex = index;
+                      });
+                    },
+                  ),
+                  Container(
+                    width: screenWidth,
+                    color: Colors.black,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: screenWidth * 0.008,
+                        top: screenHeight * 0.016,
+                      ),
+                      child: Text(
+                        "Popular on Netflex",
+                        style: TextStyle(
+                          color: Color.fromRGBO(227, 227, 227, 1.0),
+                          fontSize: screenWidth * 0.017,
+                          fontWeight: FontWeight.w800,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                  MovieSlider(
+                    itemSize: (MediaQuery.of(context).size.width * 0.1).roundToDouble(),
+                    movieList: posters.sublist(15, 30),
+                    onMovieTap: (int index) {
+                      setState(() {
+                        currentMovieIndex = index;
+                      });
+                    },
+                  ),
+                  Container(
+                    width: screenWidth,
+                    color: Colors.black,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: screenWidth * 0.008,
+                        top: screenHeight * 0.016,
+                      ),
+                      child: Text(
+                        "Trending Now",
+                        style: TextStyle(
+                          color: Color.fromRGBO(227, 227, 227, 1.0),
+                          fontSize: screenWidth * 0.017,
+                          fontWeight: FontWeight.w800,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                  MovieSlider(
+                    itemSize: (MediaQuery.of(context).size.width * 0.1).roundToDouble(),
+                    movieList: posters.sublist(30, 45),
+                    onMovieTap: (int index) {
+                      setState(() {
+                        currentMovieIndex = index;
+                      });
+                    },
+                  ),
+                  Container(
+                    width: screenWidth,
+                    color: Colors.black,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: screenWidth * 0.008,
+                        top: screenHeight * 0.016,
+                      ),
+                      child: Text(
+                        "New this week",
+                        style: TextStyle(
+                          color: Color.fromRGBO(227, 227, 227, 1.0),
+                          fontSize: screenWidth * 0.017,
+                          fontWeight: FontWeight.w800,
+                          decoration: TextDecoration.none,
+                        ),
+                      ),
+                    ),
+                  ),
+                  MovieSlider(
+                    itemSize: (MediaQuery.of(context).size.width * 0.1).roundToDouble(),
+                    movieList: posters.sublist(45, 59),
+                    onMovieTap: (int index) {
+                      setState(() {
+                        currentMovieIndex = index;
+                      });
+                    },
+                  ),
+                  // Final padding
+                  SizedBox(
+                    width: screenWidth,
+                    height: screenHeight * 0.03,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          if (currentMovieIndex != -1)
             Container(
-              width: screenWidth,
-              color: Colors.black,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: screenWidth * 0.008,
+              padding: EdgeInsets.only(
+                top: screenHeight * 0.018,
+                bottom: screenHeight * 0.017,
+              ),
+              color: Color.fromRGBO(0, 0, 0, 0.5),
+              width: screenWidth * 0.93,
+              height: screenHeight,
+              child: Center(
+                child: Container(
+                    width: screenWidth * 0.5,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(26, 26, 26, 1.0),
+                      borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.01),
+                    ),
+                  child: MovieCard(
+                    posterPath: posters[currentMovieIndex],
+                    onClose: () {
+                      setState(() {
+                        currentMovieIndex = -1;
+                      });
+                    },
+                  ),
+                  ),
                 ),
-                child: Text(
-                  "Because you watched House of Cards",
-                  style: TextStyle(
-                    color: Color.fromRGBO(227, 227, 227, 1.0),
-                    fontSize: screenWidth * 0.017,
-                    fontWeight: FontWeight.w800,
-                    decoration: TextDecoration.none,
+
+            ),
+        ],
+    );
+  }
+}
+
+class MovieCard extends StatefulWidget {
+  const MovieCard({super.key, required this.posterPath, required this.onClose});
+
+  final String posterPath;
+  final Function() onClose;
+
+  @override
+  State<MovieCard> createState() => _MovieCardState();
+}
+
+class _MovieCardState extends State<MovieCard>{
+  bool _isInMyList = false;
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.01),
+                child: Image.asset(
+                  widget.posterPath,
+                  alignment: Alignment(0.0, -0.4),
+                  height: screenHeight * 0.7,
+                  width: screenWidth * 0.5,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: screenHeight * 0.4 + 1,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: screenHeight * 0.3,
+                  width: screenWidth * 0.5,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [Color.fromRGBO(26, 26, 26, 1.0), Colors.transparent],
+                    ),
                   ),
                 ),
               ),
-            ),
-            MovieSlider(itemSize: MediaQuery.of(context).size.width * 0.09, movieList: ["assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg"]),
-
-            Container(
-              width: screenWidth,
-              color: Colors.black,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: screenWidth * 0.008,
-                  top: screenHeight * 0.016,
-                ),
+              Positioned(
+                left: MediaQuery.of(context).size.width * 0.02,
+                top: MediaQuery.of(context).size.height * 0.44,
                 child: Text(
-                  "Popular on Netflex",
+                  "Beverly Hills Cop", //fake.lorem.words(3).join(' '),
                   style: TextStyle(
-                    color: Color.fromRGBO(227, 227, 227, 1.0),
-                    fontSize: screenWidth * 0.017,
-                    fontWeight: FontWeight.w800,
+                    color: Colors.white.withOpacity(0.9),
+                    fontSize: MediaQuery.of(context).size.width * 0.06,
+                    fontWeight: FontWeight.w500,
                     decoration: TextDecoration.none,
+                    fontFamily: 'AmaticSC',
                   ),
                 ),
               ),
-            ),
-            MovieSlider(itemSize: MediaQuery.of(context).size.width * 0.09, movieList: ["assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg"]),
-
-            Container(
-              width: screenWidth,
-              color: Colors.black,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: screenWidth * 0.008,
-                  top: screenHeight * 0.016,
+              Positioned(
+                left: MediaQuery.of(context).size.width * 0.023,
+                top: MediaQuery.of(context).size.height * 0.605,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    TextButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Color.fromRGBO(243, 243, 243, 1.0)),
+                        shape: MaterialStateProperty.all(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(MediaQuery.of(context).size.width * 0.006),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        print("Play button pressed");
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: MediaQuery.of(context).size.width * 0.01,
+                          vertical: MediaQuery.of(context).size.height * 0.004,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                            right: MediaQuery.of(context).size.width * 0.006,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(
+                                Icons.play_arrow_rounded,
+                                color: Colors.black,
+                                size: MediaQuery.of(context).size.width * 0.025,
+                              ),
+                              Text(
+                                "Play",
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: MediaQuery.of(context).size.width * 0.015,
+                                  fontWeight: FontWeight.w100,
+                                  decoration: TextDecoration.none,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: MediaQuery.of(context).size.width * 0.002),
+                    IconButton(
+                        color: _isInMyList ? Colors.red : Color.fromRGBO(243, 243, 243, 1.0),
+                        iconSize: MediaQuery.of(context).size.width * 0.0235,
+                        onPressed: () {
+                          print("Add to my list button pressed");
+                          setState(() {
+                            _isInMyList = !_isInMyList;
+                          });
+                        },
+                        splashRadius: 2,
+                        icon: Icon(
+                            Icons.add_circle_outline_rounded
+                        )
+                    ),
+                  ],
                 ),
-                child: Text(
-                  "Trending Now",
-                  style: TextStyle(
-                    color: Color.fromRGBO(227, 227, 227, 1.0),
-                    fontSize: screenWidth * 0.017,
-                    fontWeight: FontWeight.w800,
-                    decoration: TextDecoration.none,
+              ),
+              Positioned(
+                right: MediaQuery.of(context).size.width * 0.001,
+                top: MediaQuery.of(context).size.height * 0.001,
+                child: IconButton(
+                  onPressed: () {
+                    widget.onClose();
+                  },
+                  icon: Icon(
+                    Icons.close_rounded,
+                    color: Color.fromRGBO(114, 114, 114, 1.0),
                   ),
                 ),
               ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.023,
             ),
-            MovieSlider(itemSize: MediaQuery.of(context).size.width * 0.09, movieList: ["assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg"]),
-
-            Container(
-              width: screenWidth,
-              color: Colors.black,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  left: screenWidth * 0.008,
-                  top: screenHeight * 0.016,
-                ),
-                child: Text(
-                  "New this week",
+            child: Row(
+              children: [
+                Text(
+                  "${88}% Match",
                   style: TextStyle(
-                    color: Color.fromRGBO(227, 227, 227, 1.0),
-                    fontSize: screenWidth * 0.017,
-                    fontWeight: FontWeight.w800,
+                    color: Colors.green,
+                    fontSize: MediaQuery.of(context).size.width * 0.01,
+                    fontWeight: FontWeight.w600,
                     decoration: TextDecoration.none,
                   ),
                 ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.01),
+                Text(
+                  "2019",
+                  style: TextStyle(
+                    color: Color.fromRGBO(145, 145, 145, 1.0),
+                    fontSize: MediaQuery.of(context).size.width * 0.01,
+                    fontWeight: FontWeight.w400,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.005),
+                Text(
+                  "1h 39m",
+                  style: TextStyle(
+                    color: Color.fromRGBO(145, 145, 145, 1.0),
+                    fontSize: MediaQuery.of(context).size.width * 0.01,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.005),
+                Icon(
+                  Icons.hd_outlined,
+                  size: MediaQuery.of(context).size.width * 0.016,
+                  color: Color.fromRGBO(145, 145, 145, 1.0),
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.005),
+                Icon(
+                  Icons.transcribe_outlined,
+                  size: MediaQuery.of(context).size.width * 0.016,
+                  color: Color.fromRGBO(145, 145, 145, 1.0),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: MediaQuery.of(context).size.width * 0.0215,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.eighteen_up_rating,
+                  size: MediaQuery.of(context).size.width * 0.016,
+                  color: Color.fromRGBO(145, 145, 145, 1.0),
+                ),
+                SizedBox(width: MediaQuery.of(context).size.width * 0.002),
+                Text(
+                  "violence, sex, language",
+                  style: TextStyle(
+                    color: Color.fromRGBO(145, 145, 145, 1.0),
+                    fontSize: MediaQuery.of(context).size.width * 0.01,
+                    fontWeight: FontWeight.w500,
+                    decoration: TextDecoration.none,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.015,
+                left: MediaQuery.of(context).size.width * 0.0215,
+              ),
+              child: Text(
+                "Description:",
+                style: TextStyle(
+                  color: Color.fromRGBO(84, 84, 84, 1.0),
+                  fontSize: MediaQuery.of(context).size.width * 0.01,
+                  fontWeight: FontWeight.w500,
+                  decoration: TextDecoration.none,
+                ),
               ),
             ),
-            MovieSlider(itemSize: MediaQuery.of(context).size.width * 0.09, movieList: ["assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg","assets/images/home_screen/1.jpg"]),
-
-            // Final padding
-            SizedBox(
-              width: screenWidth,
-              height: screenHeight * 0.03,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).size.height * 0.015,
+                left: MediaQuery.of(context).size.width * 0.0215,
+                right: MediaQuery.of(context).size.width * 0.016,
+              ),
+              child: Text(
+                "Forty years after his unforgettable first case in Beverly Hills, Detroit cop Axel Foley returns to do what he does best: solve crimes and cause chaos.",
+                style: TextStyle(
+                  color: Color.fromRGBO(145, 145, 145, 1.0),
+                  fontSize: MediaQuery.of(context).size.width * 0.01,
+                  fontWeight: FontWeight.w500,
+                  decoration: TextDecoration.none,
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.only(
+              right: MediaQuery.of(context).size.width * 0.016,
+              bottom: MediaQuery.of(context).size.height * 0.02,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      // top: MediaQuery.of(context).size.height * 0.015,
+                      left: MediaQuery.of(context).size.width * 0.0215,
+                    ),
+                    alignment: Alignment.topLeft,
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Cast: ",
+                            style: TextStyle(
+                              color: Color.fromRGBO(84, 84, 84, 1.0),
+                              fontSize: MediaQuery.of(context).size.width * 0.01,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "Eddie Murphy, Mark Molloy, Joseph Gordon-Levitt, Taylour Paige, Paul Reiser, John Amos, more",
+                            style: TextStyle(
+                              color: Color.fromRGBO(145, 145, 145, 1.0),
+                              fontSize: MediaQuery.of(context).size.width * 0.01,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.015,
+                      left: MediaQuery.of(context).size.width * 0.0215,
+                    ),
+                    alignment: Alignment.topLeft,
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: "Genres: ",
+                            style: TextStyle(
+                              color: Color.fromRGBO(84, 84, 84, 1.0),
+                              fontSize: MediaQuery.of(context).size.width * 0.01,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                          TextSpan(
+                            text: "Action & Adventure, Comedy, Crime Movies",
+                            style: TextStyle(
+                              color: Color.fromRGBO(145, 145, 145, 1.0),
+                              fontSize: MediaQuery.of(context).size.width * 0.01,
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.none,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 }
 
 class MovieSlider extends StatefulWidget {
-  const MovieSlider({super.key, required this.movieList, required this.itemSize});
+  const MovieSlider({super.key, required this.movieList, required this.itemSize, required this.onMovieTap});
 
   final List<String> movieList;
   final double itemSize;
+  final Function(int) onMovieTap;
 
   @override
   State<MovieSlider> createState() => _MovieSliderState();
@@ -189,11 +603,14 @@ class _MovieSliderState extends State<MovieSlider> {
   bool _isAnimating = false;
 
   void _scrollRight() async{
-    if (!_isAnimating && _scrollController.offset + _scrollController.offset + widget.itemSize + MediaQuery.of(context).size.width * 0.002 < _scrollController.position.maxScrollExtent) {
+    double itemsLeft = (_scrollController.position.maxScrollExtent - _scrollController.offset) / widget.itemSize;
+    print("Right: $itemsLeft\n");
+    if (!_isAnimating) {
+      //print(itemsLeft);
       setState(() {
         _isAnimating = true;
       });
-      await _scrollController.animateTo(_scrollController.offset + widget.itemSize + MediaQuery.of(context).size.width * 0.002,
+      await _scrollController.animateTo(_scrollController.offset + (widget.itemSize) * min(3, itemsLeft),
           duration: Duration(milliseconds: 200), curve: Curves.ease);
       setState(() {
         _isAnimating = false;
@@ -202,11 +619,13 @@ class _MovieSliderState extends State<MovieSlider> {
   }
 
   void _scrollLeft() async{
-    if (!_isAnimating && _scrollController.offset - widget.itemSize - MediaQuery.of(context).size.width * 0.002 > _scrollController.position.minScrollExtent) {
+    double itemsLeft = (_scrollController.offset - _scrollController.position.minScrollExtent) / widget.itemSize;
+    print("Left: $itemsLeft\n");
+    if (!_isAnimating) {
       setState(() {
         _isAnimating = true;
       });
-      await _scrollController.animateTo(_scrollController.offset - widget.itemSize - MediaQuery.of(context).size.width * 0.002,
+      await _scrollController.animateTo(_scrollController.offset - widget.itemSize * min(3, itemsLeft),
           duration: Duration(milliseconds: 200), curve: Curves.ease);
       setState(() {
         _isAnimating = false;
@@ -216,11 +635,8 @@ class _MovieSliderState extends State<MovieSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.only(
-        // left: MediaQuery.of(context).size.width * 0.02,
-      ),
-      height: MediaQuery.of(context).size.height * 0.3,
+    return SizedBox(
+      height: (MediaQuery.of(context).size.height * 0.32).roundToDouble(),
       child: Stack(
         children: [
           ScrollConfiguration(
@@ -230,44 +646,72 @@ class _MovieSliderState extends State<MovieSlider> {
                 scrollDirection: Axis.horizontal,
                 itemCount: widget.movieList.length,
                 itemBuilder: (context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.005,
-                      bottom: MediaQuery.of(context).size.height * 0.005,
-                      left: MediaQuery.of(context).size.width * 0.001,
-                      right: MediaQuery.of(context).size.width * 0.001,
-                    ),
-                    child: Image.asset(
-                      width: widget.itemSize,
-                      widget.movieList[index],
-                      fit: BoxFit.contain,
-                      alignment: Alignment.center,
+                  return Container(
+                    color: Colors.black,
+                    width: widget.itemSize,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).size.height * 0.005,
+                        bottom: MediaQuery.of(context).size.height * 0.005,
+                        left: MediaQuery.of(context).size.width * 0.001,
+                        right: MediaQuery.of(context).size.width * 0.001,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          widget.onMovieTap(index);
+                        },
+                        child: Image.asset(
+                          widget.movieList[index],
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                        ),
+                      ),
                     ),
                   );
                 }
             ),
           ),
           Positioned(
-            left: MediaQuery.of(context).size.width * 0.01,
+            left: 0,
             top: 0,
             bottom: 0,
-            child: IconButton(
-              onPressed: _scrollLeft,
-              icon: Icon(
-                Icons.chevron_left_rounded,
-                color: Colors.white70,
+            width: MediaQuery.of(context).size.width * 0.04,
+            child: Container(
+              color: Colors.transparent,
+              child: IconButton(
+                onPressed: _scrollLeft,
+                icon: Icon(
+                  Icons.chevron_left_rounded,
+                  color: Colors.white70,
+                ),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                ),
+                highlightColor: Colors.black.withOpacity(0.25),
               ),
             ),
           ),
           Positioned(
-            right: MediaQuery.of(context).size.width * 0.01,
+            right: 0,
             top: 0,
             bottom: 0,
-            child: IconButton(
-              onPressed: _scrollRight,
-              icon: Icon(
-                Icons.chevron_right_rounded,
-                color: Colors.white70,
+            width: MediaQuery.of(context).size.width * 0.04,
+            child: Container(
+              color: Colors.transparent,
+              child: IconButton(
+                onPressed: _scrollRight,
+                icon: Icon(
+                  Icons.chevron_right_rounded,
+                  color: Colors.white70,
+                ),
+                style: ButtonStyle(
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  ),
+                ),
+                highlightColor: Colors.black.withOpacity(0.25),
               ),
             ),
           ),
@@ -281,6 +725,11 @@ class NoScrollBehaviour extends ScrollBehavior {
   @override
   Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
+  }
+
+  @override
+  Widget buildScrollbar(BuildContext context, Widget child, ScrollableDetails details) {
+    return child; // без скроллбара
   }
 
   @override

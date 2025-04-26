@@ -36,7 +36,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentPageIndex = 5;
+  int _currentPageIndex = 0;
   final List<Widget> pages = [
     HomeScreen(),
     Center( // temp?
