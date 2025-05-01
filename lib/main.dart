@@ -5,6 +5,7 @@ import 'package:netflix_clone/MyList.dart';
 import 'Films.dart';
 import 'HomeScreen.dart';
 import 'LeftSideMenu.dart';
+import 'Search.dart';
 import 'Series.dart';
 import 'TopRomania.dart';
 
@@ -36,18 +37,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentPageIndex = 0;
+  int _currentPageIndex = 4;
   final List<Widget> pages = [
     HomeScreen(),
-    Center( // temp?
-      child: Text(
-        'Search',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 25,
-        ),
-      ),
-    ),
+    Search(),
     Films(),
     Series(),
     MyList(),
