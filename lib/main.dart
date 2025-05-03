@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:netflix_clone/MyList.dart';
+import 'package:provider/provider.dart';
 
 import 'Films.dart';
 import 'HomeScreen.dart';
 import 'LeftSideMenu.dart';
 import 'Search.dart';
-import 'Series.dart';
 import 'TopRomania.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => MyListModel(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -37,12 +42,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentPageIndex = 4;
+  int _currentPageIndex = 0;
   final List<Widget> pages = [
     HomeScreen(),
     Search(),
-    Films(),
-    Series(),
+    FilmsSeriesScreen(
+      title: "Films",
+    ),
+    FilmsSeriesScreen(
+      title: "Series",
+    ),
     MyList(),
     TopRomania(),
   ];

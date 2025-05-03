@@ -121,6 +121,7 @@ class _HomeScreenState extends State<HomeScreen>{
                         currentMovieIndex = index;
                       });
                     },
+                    isScrolling: false,
                   ),
                   Container(
                     width: screenWidth,
@@ -149,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen>{
                         currentMovieIndex = index;
                       });
                     },
+                    isScrolling: false,
                   ),
                   Container(
                     width: screenWidth,
@@ -177,6 +179,7 @@ class _HomeScreenState extends State<HomeScreen>{
                         currentMovieIndex = index;
                       });
                     },
+                    isScrolling: false,
                   ),
                   Container(
                     width: screenWidth,
@@ -205,6 +208,7 @@ class _HomeScreenState extends State<HomeScreen>{
                         currentMovieIndex = index;
                       });
                     },
+                    isScrolling: false,
                   ),
                   // Final padding
                   SizedBox(
@@ -231,11 +235,13 @@ class _HomeScreenState extends State<HomeScreen>{
 }
 
 class MovieSlider extends StatefulWidget {
-  const MovieSlider({super.key, required this.movieList, required this.itemSize, required this.onMovieTap});
+  MovieSlider({super.key, this.scrollSpeed = 0.0, required this.isScrolling, required this.movieList, required this.itemSize, required this.onMovieTap});
 
   final List<String> movieList;
   final double itemSize;
   final Function(int) onMovieTap;
+  final bool isScrolling;
+  final double scrollSpeed;
 
   @override
   State<MovieSlider> createState() => _MovieSliderState();
@@ -244,6 +250,36 @@ class MovieSlider extends StatefulWidget {
 class _MovieSliderState extends State<MovieSlider> {
   final ScrollController _scrollController = ScrollController();
   bool _isAnimating = false;
+
+  late Timer _timer;
+  bool _scrollForward = true;
+
+  @override
+  void initState(){
+    super.initState();
+    _timer = Timer.periodic(Duration(milliseconds: 16), (timer) {
+      if(!_scrollController.hasClients) return; // waits until the controller is ready
+      double currentOffset = _scrollController.offset;
+      if(widget.isScrolling) {
+        if (_scrollForward) {
+          if (currentOffset >= _scrollController.position.maxScrollExtent) {
+            _scrollForward = false;
+          }
+          else {
+            _scrollController.jumpTo(currentOffset + widget.scrollSpeed);
+          }
+        }
+        else {
+          if (currentOffset <= _scrollController.position.minScrollExtent) {
+            _scrollForward = true;
+          }
+          else {
+            _scrollController.jumpTo(currentOffset - widget.scrollSpeed);
+          }
+        }
+      }
+    });
+  }
 
   void _scrollRight() async{
     double itemsLeft = (_scrollController.position.maxScrollExtent - _scrollController.offset) / widget.itemSize;
@@ -314,50 +350,52 @@ class _MovieSliderState extends State<MovieSlider> {
                 }
             ),
           ),
-          Positioned(
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: MediaQuery.of(context).size.width * 0.04,
-            child: Container(
-              color: Colors.transparent,
-              child: IconButton(
-                onPressed: _scrollLeft,
-                icon: Icon(
-                  Icons.chevron_left_rounded,
-                  color: Colors.white70,
-                ),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          if (!widget.isScrolling)
+            Positioned(
+              left: 0,
+              top: 0,
+              bottom: 0,
+              width: MediaQuery.of(context).size.width * 0.04,
+              child: Container(
+                color: Colors.transparent,
+                child: IconButton(
+                  onPressed: _scrollLeft,
+                  icon: Icon(
+                    Icons.chevron_left_rounded,
+                    color: Colors.white70,
                   ),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                    ),
+                  ),
+                  highlightColor: Colors.black.withOpacity(0.25),
                 ),
-                highlightColor: Colors.black.withOpacity(0.25),
               ),
             ),
-          ),
-          Positioned(
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: MediaQuery.of(context).size.width * 0.04,
-            child: Container(
-              color: Colors.transparent,
-              child: IconButton(
-                onPressed: _scrollRight,
-                icon: Icon(
-                  Icons.chevron_right_rounded,
-                  color: Colors.white70,
-                ),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+          if (!widget.isScrolling)
+            Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: MediaQuery.of(context).size.width * 0.04,
+              child: Container(
+                color: Colors.transparent,
+                child: IconButton(
+                  onPressed: _scrollRight,
+                  icon: Icon(
+                    Icons.chevron_right_rounded,
+                    color: Colors.white70,
                   ),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                    ),
+                  ),
+                  highlightColor: Colors.black.withOpacity(0.25),
                 ),
-                highlightColor: Colors.black.withOpacity(0.25),
               ),
             ),
-          ),
         ],
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:netflix_clone/MyList.dart';
+import 'package:provider/provider.dart';
 
 class MovieCard extends StatefulWidget {
   const MovieCard({super.key, required this.posterPath, required this.description, required this.onClose});
@@ -130,19 +132,26 @@ class _MovieCardState extends State<MovieCard>{
                             ),
                           ),
                           SizedBox(width: MediaQuery.of(context).size.width * 0.002),
-                          IconButton(
-                              color: _isInMyList ? Colors.red : Color.fromRGBO(243, 243, 243, 1.0),
-                              iconSize: MediaQuery.of(context).size.width * 0.0235,
-                              onPressed: () {
-                                print("Add to my list button pressed");
-                                setState(() {
-                                  _isInMyList = !_isInMyList;
-                                });
-                              },
-                              splashRadius: 2,
-                              icon: Icon(
-                                  Icons.add_circle_outline_rounded
-                              )
+                          Consumer<MyListModel>(
+                            builder: (context, value, child) {
+                              bool isFavorite = value.isFavorite(widget.posterPath);
+                              return IconButton(
+                                  color: isFavorite ? Colors.red : Color.fromRGBO(243, 243, 243, 1.0),
+                                  iconSize: MediaQuery.of(context).size.width * 0.0235,
+                                  onPressed: () {
+                                    if(isFavorite) {
+                                      value.remove(widget.posterPath);
+                                    }
+                                    else {
+                                      value.add(widget.posterPath);
+                                    }
+                                  },
+                                  splashRadius: 2,
+                                  icon: Icon(
+                                      Icons.add_circle_outline_rounded,
+                                  )
+                              );
+                            }
                           ),
                         ],
                       ),

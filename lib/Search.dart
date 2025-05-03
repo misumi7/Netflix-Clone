@@ -126,7 +126,8 @@ class _SearchState extends State<Search> {
                     setState(() {
                       currentMovieIndex = index;
                     });
-                  }
+                  },
+                  isScrolling: false,
               ),
             ),
           ],
