@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:netflix_clone/MyList.dart';
@@ -61,18 +62,33 @@ class _HomePageState extends State<HomePage> {
     // debugPaintSizeEnabled = true;
     return Container(
       color: Colors.black,
-      child: Row(
-        children: [
-            LeftSideMenu(
-              onPageSelected: (index) {
-                setState(() {
+      child: kIsWeb ?
+          Row(
+            children: [
+              LeftSideMenu(
+                onPageSelected: (index) {
+                  setState(() {
+                    _currentPageIndex = index;
+                  });
+                },
+              ),
+              pages[_currentPageIndex],
+            ],
+          )
+        :
+          Column(
+            children: [
+              pages[_currentPageIndex],
+              BottomMenu(
+                currentPageIndex: _currentPageIndex,
+                onPageSelected: (index) {
+                  setState(() {
                   _currentPageIndex = index;
-                });
-              },
-            ),
-            pages[_currentPageIndex],
-          ],
-      ),
+                  });
+                },
+              ),
+            ]
+          ),
     );
   }
 }
