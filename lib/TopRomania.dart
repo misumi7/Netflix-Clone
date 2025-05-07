@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +77,7 @@ class _TopRomaniaState extends State<TopRomania>{
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(), // for mobile scrolling
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: kIsWeb ? 4 : 1,
+                        crossAxisCount: kIsWeb ? min(4, max(2, (screenWidth * 0.93) ~/ 300)) : 1,
                         crossAxisSpacing: MediaQuery.of(context).size.width * 0.01,
                         mainAxisSpacing: MediaQuery.of(context).size.width * 0.04,
                         childAspectRatio: 1,

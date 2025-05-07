@@ -16,6 +16,7 @@ class FilmsSeriesScreen extends StatefulWidget{
 
 class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
   int currentMovieIndex = -1;
+  int movieSliderIndex = -1;
   final TextEditingController myController = TextEditingController();
 
   @override
@@ -26,6 +27,24 @@ class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
     for (int i = 0; i < 59; ++i){
       posters.add("assets/images/home_screen/posters/poster_${i}.jpg");
     }
+
+    List<List<String>> filmsPosters = [
+      posters.sublist(0, 10),
+      posters.sublist(10, 21),
+      posters.sublist(21, 31),
+      posters.sublist(31, 41),
+      posters.sublist(41, 51),
+      posters.sublist(49, 59),
+    ];
+    List<List<String>> seriesPosters = [
+      posters.sublist(49, 59),
+      posters.sublist(39, 49),
+      posters.sublist(29, 39),
+      posters.sublist(19, 29),
+      posters.sublist(9, 19),
+      posters.sublist(0, 9),
+    ];
+
     return Stack(
       children: [
         Container(
@@ -153,6 +172,7 @@ class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
                       onMovieTap: (index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 0;
                         });
                       },
                   ),
@@ -164,6 +184,7 @@ class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
                       onMovieTap: (index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 1;
                         });
                       },
                   ),
@@ -176,6 +197,7 @@ class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
                       onMovieTap: (index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 2;
                         });
                       }
                   ),
@@ -188,6 +210,7 @@ class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
                       onMovieTap: (index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 3;
                         });
                       }
                   ),
@@ -200,6 +223,7 @@ class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
                       onMovieTap: (index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 4;
                         });
                       }
                   ),
@@ -211,6 +235,7 @@ class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
                       onMovieTap: (index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 5;
                         });
                       }
                   ),
@@ -224,11 +249,12 @@ class _FilmsSeriesScreenState extends State<FilmsSeriesScreen>{
         ),
         if(currentMovieIndex != -1)
           MovieCard(
-            posterPath: posters[currentMovieIndex],
+            posterPath: widget.title == "Films" ? filmsPosters[movieSliderIndex][currentMovieIndex] : seriesPosters[movieSliderIndex][currentMovieIndex],
             description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             onClose: () {
               setState(() {
                 currentMovieIndex = -1;
+                movieSliderIndex = -1;
               });
             },
           ),

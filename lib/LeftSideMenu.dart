@@ -165,42 +165,54 @@ class LeftSideMenu extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AnimatedUnderlinedIconButton(
-                  icon: const Icon(Icons.search),
+                  icon: Icon(
+                    Icons.search,
+                  ),
                   onPressed: () {
                     onPageSelected(1);
                   },
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 AnimatedUnderlinedIconButton(
-                  icon: const Icon(Icons.home),
+                  icon: Icon(
+                    Icons.home,
+                  ),
                   onPressed: () {
                     onPageSelected(0);
                   },
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 AnimatedUnderlinedIconButton(
-                  icon: const Icon(Icons.movie),
+                  icon: Icon(
+                    Icons.movie,
+                  ),
                   onPressed: () {
                     onPageSelected(2);
                   },
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 AnimatedUnderlinedIconButton(
-                  icon: const Icon(Icons.live_tv),
+                  icon: Icon(
+                    Icons.live_tv,
+                  ),
                   onPressed: () {
                     onPageSelected(3);
                   },
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 AnimatedUnderlinedIconButton(
-                  icon: const Icon(Icons.bookmark_added),
+                  icon: Icon(
+                    Icons.bookmark_added,
+                  ),
                   onPressed: () {
                     onPageSelected(4);
                   },
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.03),
                 AnimatedUnderlinedIconButton(
-                  icon: const Icon(Icons.trending_up_rounded),
+                  icon: Icon(
+                    Icons.trending_up_rounded,
+                  ),
                   onPressed: () {
                     onPageSelected(5);
                   },
@@ -240,7 +252,7 @@ class _AnimatedUnderlinedIconButtonState extends State<AnimatedUnderlinedIconBut
               Icon(
                 widget.icon.icon,
                 color: Colors.white,
-                size: 35,
+                size: MediaQuery.of(context).size.width * 0.022,
               ),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 120),

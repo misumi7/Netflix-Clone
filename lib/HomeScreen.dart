@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen>{
   late Timer timer;
   int currentBannerIndex = 0;
   int currentMovieIndex = -1;
+  int movieSliderIndex = -1;
   final List<Banner> banners = [
     Banner(
       key: ValueKey(0),
@@ -77,6 +78,14 @@ class _HomeScreenState extends State<HomeScreen>{
       posters.add("assets/images/home_screen/posters/poster_${i}.jpg");
     }
 
+    List<List<String>> movieSliderPosters = [
+      posters.sublist(0, 15),
+      posters.sublist(15, 30),
+      posters.sublist(30, 45),
+      posters.sublist(45, 59),
+      posters.sublist(38, 42) + posters.sublist(21, 25) + posters.sublist(7, 12)
+    ];
+
     return Container(
         width: kIsWeb ? screenWidth * 0.93 : screenWidth,
         height: kIsWeb ? screenHeight : screenHeight * 0.93,
@@ -118,10 +127,11 @@ class _HomeScreenState extends State<HomeScreen>{
                     ),
                     MovieSlider(
                       itemSize: kIsWeb ? screenWidth * 0.1 : screenHeight * 0.155,
-                      movieList: posters.sublist(0, 15),
+                      movieList: movieSliderPosters[0],
                       onMovieTap: (int index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 0;
                         });
                       },
                       isScrolling: false,
@@ -148,10 +158,11 @@ class _HomeScreenState extends State<HomeScreen>{
                     ),
                     MovieSlider(
                       itemSize: kIsWeb ? screenWidth * 0.1 : screenHeight * 0.155,
-                      movieList: posters.sublist(15, 30),
+                      movieList: movieSliderPosters[1],
                       onMovieTap: (int index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 1;
                         });
                       },
                       isScrolling: false,
@@ -178,10 +189,11 @@ class _HomeScreenState extends State<HomeScreen>{
                     ),
                     MovieSlider(
                       itemSize: kIsWeb ? screenWidth * 0.1 : screenHeight * 0.155,
-                      movieList: posters.sublist(30, 45),
+                      movieList: movieSliderPosters[2],
                       onMovieTap: (int index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 2;
                         });
                       },
                       isScrolling: false,
@@ -208,10 +220,11 @@ class _HomeScreenState extends State<HomeScreen>{
                     ),
                     MovieSlider(
                       itemSize: kIsWeb ? screenWidth * 0.1 : screenHeight * 0.155,
-                      movieList: posters.sublist(45, 59),
+                      movieList: movieSliderPosters[3],
                       onMovieTap: (int index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 3;
                         });
                       },
                       isScrolling: false,
@@ -239,11 +252,12 @@ class _HomeScreenState extends State<HomeScreen>{
                     ),
                     MovieSlider(
                       itemSize: kIsWeb ? screenWidth * 0.18 : screenHeight * 0.25,
-                      movieList: posters.sublist(38, 42) + posters.sublist(21, 25) + posters.sublist(7, 12),
+                      movieList: movieSliderPosters[4],
                       format: 1,
                       onMovieTap: (int index) {
                         setState(() {
                           currentMovieIndex = index;
+                          movieSliderIndex = 4;
                         });
                       },
                       isScrolling: false,
@@ -260,11 +274,12 @@ class _HomeScreenState extends State<HomeScreen>{
             ),
             if (currentMovieIndex != -1)
               MovieCard(
-                posterPath: posters[currentMovieIndex],
+                posterPath: movieSliderPosters[movieSliderIndex][currentMovieIndex],
                 description: "Forty years after his unforgettable first case in Beverly Hills, Detroit cop Axel Foley returns to do what he does best: solve crimes and cause chaos.",
                 onClose: () {
                   setState(() {
                     currentMovieIndex = -1;
+                    movieSliderIndex = -1;
                   });
                 },
               ),
@@ -376,6 +391,75 @@ class Banner extends StatelessWidget{
                     color: Colors.black,
                   ),
                 ),
+                Container(
+                  alignment: Alignment(-0.28, 0.35),
+                  width: screenWidth * 0.31,
+                  height: screenHeight * 0.52,
+                  // color: Colors.red,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Opacity(
+                        opacity: title.isNotEmpty ? 0.7 : 0.9,
+                        child: Image.asset(
+                          logoPath,
+                          width: screenWidth * logoSize,
+                          height: screenWidth * logoSize,
+                          fit: BoxFit.fitWidth,
+                          alignment: Alignment.center,
+                        ),
+                      ),
+                      if(title.isNotEmpty)
+                        Container(
+                          padding: EdgeInsets.only(
+                            top: screenHeight * titleTopPadding,
+                          ),
+                          child: Text.rich(
+                            softWrap: true,
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: title[0].toUpperCase(),
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontFamily: "BebasNeue",
+                                    fontSize: screenWidth * 0.05,
+                                    fontWeight: FontWeight.w700,
+                                    decoration: TextDecoration.none,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 10.0,
+                                        color: Colors.black,
+                                        offset: Offset(5.0, 5.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: title.substring(1).toUpperCase(),
+                                  style: TextStyle(
+                                    fontFamily: "BebasNeue",
+                                    color: Color.fromRGBO(
+                                        227, 227, 227, 1.0),
+                                    fontSize: screenWidth * 0.05,
+                                    fontWeight: FontWeight.w500,
+                                    decoration: TextDecoration.none,
+                                    shadows: [
+                                      Shadow(
+                                        blurRadius: 10.0,
+                                        color: Colors.black,
+                                        offset: Offset(5.0, 5.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
                 Positioned(
                   bottom: screenHeight * 0.125,
                   left: screenWidth * 0.018,
@@ -396,82 +480,6 @@ class Banner extends StatelessWidget{
                         ),
                       ),
                     ],
-                  ),
-                ),
-                Positioned(
-                  bottom: screenHeight * 0.2,
-                  left: 0,
-                  right: 0,
-                  child: Center(
-                    child: SizedBox(
-                      // color: Colors.red,
-                      width: screenWidth * 0.23,
-                      child: Center(
-                        child: Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Opacity(
-                              opacity: title.isNotEmpty ? 0.7 : 0.9,
-                              child: Image.asset(
-                                logoPath,
-                                width: screenWidth * logoSize,
-                                height: screenWidth * logoSize,
-                                fit: BoxFit.fitWidth,
-                                alignment: Alignment.center,
-                              ),
-                            ),
-                            if(title.isNotEmpty)
-                              Container(
-                                padding: EdgeInsets.only(
-                                  top: screenHeight * titleTopPadding,
-                                ),
-                                child: Text.rich(
-                                  softWrap: true,
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: title[0].toUpperCase(),
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontFamily: "BebasNeue",
-                                          fontSize: screenWidth * 0.05,
-                                          fontWeight: FontWeight.w700,
-                                          decoration: TextDecoration.none,
-                                          shadows: [
-                                            Shadow(
-                                              blurRadius: 10.0,
-                                              color: Colors.black,
-                                              offset: Offset(5.0, 5.0),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: title.substring(1).toUpperCase(),
-                                        style: TextStyle(
-                                          fontFamily: "BebasNeue",
-                                          color: Color.fromRGBO(
-                                              227, 227, 227, 1.0),
-                                          fontSize: screenWidth * 0.05,
-                                          fontWeight: FontWeight.w500,
-                                          decoration: TextDecoration.none,
-                                          shadows: [
-                                            Shadow(
-                                              blurRadius: 10.0,
-                                              color: Colors.black,
-                                              offset: Offset(5.0, 5.0),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
-                      ),
-                    ),
                   ),
                 ),
               ],
@@ -526,6 +534,11 @@ class Banner extends StatelessWidget{
             height: screenHeight * 0.45,
             fit: BoxFit.cover,
             alignment: Alignment(-0.165, 0),
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.25),
+            width: screenWidth,
+            height: screenHeight * 0.45,
           ),
 
           // Shadows
